@@ -1,0 +1,156 @@
+{% extends 'base.html' %}
+
+
+{% load static %}
+
+
+{% block css %}
+{% endblock css %}
+
+
+{% block title %}
+<title>
+    Gallery : Page
+</title>
+{% endblock title %}
+
+
+{% block body %}
+
+<div class="container my-5 text-center bg-secondary text-light rounded-3 shadow p-2 mb-2">
+
+    <h1 class="display-6">Gallery</h1>
+</div>
+
+<!-- gallery view  -->
+
+<div class="container my-5">
+    <div class="row">
+        <!-- left side row  -->
+        <div class="col-2">
+            <ul class="list-group">
+                <li class="list-group-item"><a href="{% url 'gallery' %}" class="text-decoration-none">All Images</a>
+                    {% for i in category %}
+                <li class="list-group-item"><a href="{% url 'cat' i.id %}" class="text-decoration-none">{{i.title}}</a>
+                </li>
+
+                {% endfor %}
+
+                </li>
+            </ul>
+
+        </div>
+        <div class="col-10">
+
+            <div class="row">
+                {% for i in Images %}
+                <div class="col-3 ">
+                    <div class="card" style="width: 13rem;">
+                        <img src="{{i.image.url}}" id="myover" class="card-img-top" alt="No Image "
+                            style="height: 150px;">
+                        <div class="card-body">
+                            <h5 class="card-title">{{i.title}}</h5>
+                            <p class="card-text">Uploaded By {{i.uploaded_by}}</p>
+                            <p class="card-text">Uploaded Date {{i.uploaded_at}}</p>
+
+
+
+                            <!-- modal code here  -->
+
+                            <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas"
+                                data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">View somewhere
+                            </button>
+
+                            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
+                                aria-labelledby="offcanvasRightLabel">
+                                <div class="offcanvas-header">
+                                    <h5 id="offcanvasRightLabel"></h5>
+                                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="offcanvas-body">
+                                    <p>{{i.title}}</p>
+                                    <img src="{{i.image.url}}" id="myover" class="card-img-top" alt="No Image "
+                                        style="height: 150px;">
+
+                                    <h5 class="card-title">{{i.title}}</h5>
+                                    <p class="card-text">Uploaded By {{i.uploaded_by}}</p>
+                                    <p class="card-text">Uploaded Date {{i.uploaded_at}}</p>
+
+
+                                </div>
+                            </div>
+
+                            <!-- redirect to next page to show all the data  -->
+
+                            <a href="{% url 'viewinfo' i.id %}" class="btn btn-primary my-3 p-3" id="desc">See Anywhere
+                            </a>
+
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal">
+                                Launch demo modal
+                            </button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">{{i.title}}</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p class="display-6">{{i.id}}</p>
+                                            <img src="{{i.image.url}}" alt="No image" height="">
+                                            <p class=""> {{i.desc}}</p>
+                                            <p class=""> {{i.uploaded_at}}</p>
+                                            <p class=""> {{i.uploaded_at}}</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary">Save changes</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- <div id="myover">
+
+</div> -->
+
+
+
+<!-- 
+<script>
+
+    $('img').load(function () {
+        $(this).data('height', this.height);
+    }).bind('mouseenter mouseleave', function (e) {
+        $(this).stop().animate({
+            height: $(this).data('height') * (e.type === 'mouseenter' ? 1.5 : 1)
+        });
+    });
+</script> -->
+
+
+
+
+
+
+{% endblock body %}
